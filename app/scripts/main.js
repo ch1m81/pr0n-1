@@ -60,10 +60,8 @@ require.config({
 });
 
 
-// start the app
 require([
-	'app'
-], function(pr0nApp) {
-	//console.info('main.js ....', pr0nApp); 
-	pr0nApp.start();
+    'App'
+], function(App) {
+    App.start();
 });

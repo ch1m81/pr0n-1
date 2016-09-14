@@ -1,0 +1,93 @@
+<div class="panel-heading <% if (rfSolved === "1") { %> solved <% } %>">	
+	<a href="#" >
+		<%= faqTitle %>
+	</a>
+	<span class="pull-right">
+		<small>
+			created on:
+		</small>
+		<span class="text-info">						
+			<%= rfCreatedOn %>,
+		</span>
+		<small>
+			<%= sinceCreated %>
+		</small>
+	</span>
+	<span class="clearfix"></span>
+</div>
+
+<div class="panel-body <% if (rfSolved === "1") { %> solved <% } %>">
+	<div class="row">
+		
+		<div class="col-sm-4"> 
+			<legend>Free Email: </legend>
+			
+			<h3>	
+				<span class="label label-info">
+					<i class="fa fa-at fa-lg" aria-hidden="true"></i> 
+					<%= rfEmailToChange %>
+				</span>
+			</h3>
+		</div>		
+		
+		<div class="col-sm-4"> 
+			<legend>Info: </legend>
+					
+			<p class="text-info rf-usr-txt">
+				<i class="fa fa-user fa-lg" aria-hidden="true"></i> 
+				<%= rfFirstName %>, <%= rfLastName %>
+			</p>
+			
+			<p class="text-info rf-usr-txt">
+				<i class="fa fa-file-text-o fa-lg" aria-hidden="true"></i>
+				<a href="pubupload/requestform/<%= rfID %>/<%= rfIDCard %>"><%= rfIDCard %></a>
+			</p>
+			
+		</div> 
+	
+		<div class="col-sm-4">                
+			<legend>Contact: </legend>
+			
+			<% if (rfMobileNumber !== "") { %>		
+			<p class="text-info rf-usr-txt">
+				<i class="fa fa-phone fa-lg" aria-hidden="true"></i> 
+				<%= rfMobileNumber %>
+			</p>
+			<% } %>
+			<% if (rfEmailToContact !== "") { %>
+			<p class="text-info rf-usr-txt">
+				<i class="fa fa-at fa-lg" aria-hidden="true"></i> 
+				<%= rfEmailToContact %>
+			</p>
+			<% } %>
+		</div>
+		
+		<div class="col-sm-12">
+			<div class="pull-right">
+				<div data-toggle="tooltip" title="mark this task as done">
+					<input class="markAsDone" <% if(rfSolved === "1") { %> checked <% } %> data-width="100" data-onstyle="success"  data-on="done" data-off="not done" type="checkbox">
+				</div>
+			</div>
+				
+			<span class="clearfix"></span>
+		</div>
+		
+	
+		<div class="col-sm-12">
+			<div class="pull-right">
+				<div class="rf-list-solved-sign">
+					<% if (rfSolved === "1") { %> 
+					<small class="text-success">solved on  <%= rfSolvedOn %> by  Nikola Tesla</small>
+					<% } else {%>
+					<small>&#8203</small>
+					
+					<% } %>
+				</div>
+			</div>
+			<span class="clearfix"></span>
+		</div>
+		
+		
+	
+	 </div>
+</div>
