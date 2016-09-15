@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+				'Maatwebsite\Excel\ExcelServiceProvider',
 
         /*
          * Package Service Providers...
@@ -229,6 +230,8 @@ return [
 				
 				'JWTAuth'   => Tymon\JWTAuthFacades\JWTAuth::class,
 				'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class,
+				
+				'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
     ],
 
