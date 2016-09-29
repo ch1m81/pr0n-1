@@ -8,8 +8,14 @@ const mainBowerFiles = require('main-bower-files');
 const gulpFilter = require('gulp-filter');
 const debug = require('gulp-debug-streams');
 
+var url = require('url');
+var proxy = require('proxy-middleware');
+
+
+
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
+
 
 gulp.task('styles', () => {
   return gulp.src('app/styles/*.css')
@@ -22,8 +28,8 @@ gulp.task('styles', () => {
 
 // all htmls but not the index one
 gulp.task('tpls', () => {
-  return gulp.src('app/**/*.tpl')
-		.pipe(debug({title: '_____________________________tpls: '}))
+  return gulp.src('app/**/*.html')
+		//.pipe(debug({title: '_________ tpls: '}))
 		.pipe($.htmlmin({collapseWhitespace: true, removeComments: true}))
     .pipe(gulp.dest('dist'))
 		.pipe(gulp.dest('.tmp'))
@@ -136,7 +142,13 @@ gulp.task('extras', () => {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 gulp.task('serve', ['styles', 'fonts', 'extras', 'vendors', 'html', 'scripts', 'tpls'], () => {
-  browserSync({
+//gulp.task('serve', ['scripts'], () => {
+  var proxyOptions = url.parse('http://www.pornoesel.com/v1/api');
+	proxyOptions.route = '/api';
+	
+	console.log(proxyOptions);
+	
+	browserSync({
     notify: true,
     port: 9000,
 		reload: false,
@@ -146,7 +158,8 @@ gulp.task('serve', ['styles', 'fonts', 'extras', 'vendors', 'html', 'scripts', '
 		},*/
     server: {
       baseDir: ['.tmp', 'app'],
-      routes: {
+			middleware: [proxy(proxyOptions)],
+			routes: {
         '/bower_components': 'bower_components'
       }
     }
@@ -162,16 +175,22 @@ gulp.task('serve', ['styles', 'fonts', 'extras', 'vendors', 'html', 'scripts', '
 	gulp.task('js-watch', ['scripts'], browserSync.reload);
 
 	
-	
 
-  gulp.watch('app/**/*.tpl', ['tpls']);
 	
   gulp.watch('app/styles/**/*.css', ['styles']);
+	
+	gulp.watch('app/**/*.html', function() {
+		setTimeout(function () {
+				gulp.start('tpls');
+		}, 300);
+	});
+	
   gulp.watch('app/scripts/**/*.js', function() {
-        setTimeout(function () {
-            gulp.start('js-watch');
-        }, 300);
-    });
+		setTimeout(function () {
+				gulp.start('js-watch');
+		}, 300);
+	});
+		
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['fonts']);
 });
